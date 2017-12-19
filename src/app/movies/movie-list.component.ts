@@ -1,12 +1,17 @@
-import {Component} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
+import { IMovie } from './movie';
 @Component({
     selector:'mm-movies',
-    templateUrl:'./movie-list.component.html'
+    templateUrl:'./movie-list.component.html',
+    styleUrls:['./movie-list.component.css']
 })
 
-export class MovieListComponent{
+export class MovieListComponent implements OnInit{
     pageTitle:string="Movie List!";
-    movies:any[]=[{
+    width:number=50;
+    height:number=50;
+    filteredMovies:IMovie[];
+    movies:IMovie[]=[{
         "movieId": 1,
         "movieName": "Star wars: The Last Jedi",
         "movieCode": "GDN-0011",
@@ -26,9 +31,35 @@ export class MovieListComponent{
         "starRating": 4.2,
         "imageUrl": "http://placehold.it/150/92c952"
     }];
-    filterText:string="";
+    _listFilter:string;
+    get listFilter():string{
+        return this._listFilter;
+    }
+    set listFilter(value:string){
+        this._listFilter=value;
+        this.filteredMovies=this.listFilter?this.performFilter(this.listFilter):this.movies;
+    }
+
+    
+    
     showImage:boolean=false;
     toggleImage():void{
         this.showImage=!this.showImage;
+    }
+    ngOnInit():void{
+        console.log("Hey I'm from on init");
+        
+    }
+    constructor(){
+        console.log("this is constructor");
+        this.filteredMovies=this.movies;
+        this.listFilter='King';
+    }
+    performFilter(filterBy:string):IMovie[]{
+        filterBy=filterBy.toLocaleLowerCase();
+        var res=this.movies.filter((movie:IMovie)=>movie.movieName.toLocaleLowerCase().indexOf(filterBy)!==-1);
+        console.log(res);
+        return res;
+
     }
 }
