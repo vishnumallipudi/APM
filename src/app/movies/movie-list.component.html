@@ -6,7 +6,8 @@
         <div class="row">
             <div class="col-md-2">filter By:</div>
             <div class="col-md-4">
-                <input type="text" />
+                <input type="text" [(ngModel)]='filterText' />
+                {{filterText}}
             </div>
         </div>
         <div class="row">
@@ -18,7 +19,7 @@
             <table class="table" *ngIf='movies&&movies.length'>
                 <thead>
                     <tr>
-                        <th><button class="btn btn-primary">Show Image</button></th>
+                        <th><button (click)='toggleImage()' class="btn btn-primary">{{showImage?'Hide':'Show'}} Image</button></th>
                         <th>Movie</th>
                         <th>Code</th>
                         <th>Available</th>
@@ -28,11 +29,11 @@
                 </thead>
                 <tbody>
                     <tr *ngFor='let movie of movies'>
-                        <td><img src={{movie.imageUrl}}/></td>
+                        <td><img *ngIf='showImage' src={{movie.imageUrl}} [title]='movie.movieName'/></td>
                         <td>{{movie.movieName}}</td>
                         <td>{{movie.movieCode}}</td>
                         <td>{{movie.releaseDate}}</td>
-                        <td>{{movie.price}}</td>
+                        <td>{{movie.price|currency:'USD':true:'1.2-2'}}</td>
                         <td>{{movie.starRating}}</td>
                     </tr>
                 </tbody>

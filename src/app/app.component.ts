@@ -11,7 +11,7 @@ import {Component} from '@angular/core';
 })
 
 export class AppComponent {
-pageTitle:string="Bla Bla Component";
+pageTitle:string="My Movies list";
 
 
 }

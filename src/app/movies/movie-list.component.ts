@@ -26,4 +26,9 @@ export class MovieListComponent{
         "starRating": 4.2,
         "imageUrl": "http://placehold.it/150/92c952"
     }];
+    filterText:string="";
+    showImage:boolean=false;
+    toggleImage():void{
+        this.showImage=!this.showImage;
+    }
 }
