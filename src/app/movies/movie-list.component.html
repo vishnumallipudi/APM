@@ -36,7 +36,8 @@
                         <td>{{movie.movieCode|convertToSpaces:'-'}}</td>
                         <td>{{movie.releaseDate}}</td>
                         <td>{{movie.price|currency:'USD':true:'1.2-2'}}</td>
-                        <td>{{movie.starRating}}</td>
+                        <td><pm-star [rating]='movie.starRating' 
+                            (ratingClicked)='onRatingClicked($event)'></pm-star></td>
                     </tr>
                 </tbody>
             </table>

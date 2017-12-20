@@ -1,5 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import { IMovie } from './movie';
+import { movieService } from '../../api/products/movies.service';
 @Component({
     selector:'mm-movies',
     templateUrl:'./movie-list.component.html',
@@ -11,26 +12,7 @@ export class MovieListComponent implements OnInit{
     width:number=50;
     height:number=50;
     filteredMovies:IMovie[];
-    movies:IMovie[]=[{
-        "movieId": 1,
-        "movieName": "Star wars: The Last Jedi",
-        "movieCode": "GDN-0011",
-        "releaseDate": "March 19, 2016",
-        "description": "Leaf rake with 48-inch wooden handle.",
-        "price": 19.95,
-        "starRating": 3.2,
-        "imageUrl": "http://placehold.it/150/92c952"
-    },
-    {
-        "movieId": 2,
-        "movieName": "The Kingsmen: Golden Circle",
-        "movieCode": "GDN-0023",
-        "releaseDate": "March 18, 2016",
-        "description": "15 gallon capacity rolling garden cart",
-        "price": 32.99,
-        "starRating": 4.2,
-        "imageUrl": "http://placehold.it/150/92c952"
-    }];
+    movies:IMovie[]=[];
     _listFilter:string;
     get listFilter():string{
         return this._listFilter;
@@ -48,12 +30,11 @@ export class MovieListComponent implements OnInit{
     }
     ngOnInit():void{
         console.log("Hey I'm from on init");
-        
-    }
-    constructor(){
-        console.log("this is constructor");
+        this.movies=this._movSer.getMovies();
         this.filteredMovies=this.movies;
-        this.listFilter='King';
+    }
+    constructor(private _movSer:movieService){
+        console.log("this is constrlsljhctor");
     }
     performFilter(filterBy:string):IMovie[]{
         filterBy=filterBy.toLocaleLowerCase();
@@ -62,4 +43,8 @@ export class MovieListComponent implements OnInit{
         return res;
 
     }
+    onRatingClicked(msg:string):void{
+        this.pageTitle='Movie List '+ msg;
+    }
+
 }
